@@ -37,9 +37,6 @@ const bot = new builder.UniversalBot(connector, [
         message.addAttachment(card);
 
         session.send(`Hi there! I'm the calculator bot! I can add numbers for you.`);
-        const choices = ['Add', 'Help'];
-        //builder.Prompts.choice(session, message, choices);
-
         session.endConversation(message);
     }
 ]);
@@ -48,13 +45,16 @@ bot
     .dialog('AddNumber', [
         (session, args, next) => {
             let message = null;
+
             if (!session.privateConversationData.runningTotal) {
                 message = 'Give me the first number';
                 session.privateConversationData.runningTotal = 0;
             } else {
                 message = `Give me the next number, or say *total* to display the total`;
             }
-            builder.Prompts.number(session, message, { maxRetries: 3 });
+            builder.Prompts.number(session, message, {
+                maxRetries: 3
+            });
         },
         (session, results, next) => {
             if (results.response) {
@@ -67,4 +67,14 @@ bot
     ])
     .triggerAction({
         matches: /^add$/i
+    })
+    .beginDialogAction('Total', 'Total', {
+        matches: /^total$/
     });
+
+bot
+    .dialog('Total', [
+        (session, args, next) => {
+            session.endConversation(`The total is ${session.privateConversationData.runningTotal}`);
+        }
+    ]);
