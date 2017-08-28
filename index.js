@@ -78,3 +78,16 @@ bot
             session.endConversation(`The total is ${session.privateConversationData.runningTotal}`);
         }
     ]);
+
+bot
+    .dialog('Help', [
+        (session, args, next) => {
+            session.endDialog(`You can type **add** to add numbers.`);
+        }
+    ])
+    .triggerAction({
+        matches: /^help/i,
+        onSelectAction: (session, args) => {            
+            session.beginDialog(args.action, args);
+        }
+    });
