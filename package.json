@@ -1,0 +1,11 @@
+{
+  "name": "simple-total",
+  "version": "1.0.0",
+  "description": "Our calculator bot will allow the user to enter numbers, and once they say total we’ll display the total and allow them to start all over again",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Phuc Thai",
+  "license": "ISC"
+}
